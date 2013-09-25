@@ -1,10 +1,13 @@
 ﻿namespace TicTacToeLogic
 {
-    class Cell
+    public class Cell
     {
         public Piece CurrentValue { get; set; }
+        public int Rank { get; set; }
+        public int X;
+        public int Y;
 
-        public void SetCellToPlayerMarker(Piece playerPiece)
+        public void SetCellToPlayerPiece(Piece playerPiece)
         {
             CurrentValue = playerPiece;
         }

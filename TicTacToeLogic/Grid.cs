@@ -1,84 +1,126 @@
-﻿namespace TicTacToeLogic
+﻿using System.Collections.Generic;
+
+namespace TicTacToeLogic
 {
-    class Grid
+    internal class Grid
     {
         public int Side { get; set; }
-
-        private readonly Cell[,] _cells;
+        public Piece Winner { get; set; }
+        public Cell[,] Cells { get; set; }
 
         public Grid(Cell[,] cells)
         {
-            _cells = cells;
+            Cells = cells;
+        }
+
+        public Grid Clone()
+        {
+            var newGrid = new Grid(Cells)
+            {
+                Winner = Winner,
+                Side = Side,
+                Cells = new Cell[Side, Side]
+            };
+
+            for (var i = 0; i < Side; i++)
+                for (var j = 0; j < Side; j++)
+                    newGrid.Cells[i, j] = new Cell
+                    {
+                        CurrentValue = Cells[i, j].CurrentValue,
+                        Rank = Cells[i, j].Rank,
+                        X = i,
+                        Y = j
+                    };
+
+            return newGrid;
+        }
+
+        public List<Cell> EmptyCells
+        {
+            get
+            {
+                var emptyCells = new List<Cell>();
+                foreach (Cell c in Cells)
+                    if (c.CurrentValue == Piece.E)
+                        emptyCells.Add(c);
+                return emptyCells;
+            }
         }
 
         public Piece GetWinner()
         {
+            CheckRowForWinner();
+            CheckColumnForWinner();
+            CheckDiagonalsForWinner();
+
+            return Winner;
+        }
+
+        private void CheckRowForWinner()
+        {
             for (var n = 0; n < Side; n++)
-            {
                 if (IsRowMatchingCells(n)
                     && IsCellClaimed(n, 0))
-                    return _cells[n, 0].CurrentValue;
-                if (IsColumnMatchingCells(n)
-                    && IsCellClaimed(0, n))
-                    return _cells[0, n].CurrentValue;
-                if (IsDiagonalMatching()
-                         && IsCellClaimed(n, n))
-                    return _cells[n, n].CurrentValue;
-                if (IsReverseDiagonalMatching()
-                         && IsCellClaimed(n, Side - 1))
-                    return _cells[n, Side - 1].CurrentValue;
-            }
-
-            return Piece.N;
+                    Winner = Cells[n, 0].CurrentValue;
         }
 
         private bool IsRowMatchingCells(int n)
         {
-            var isMatching = true;
-
             for (int i = 1; i < Side; i++)
-                if (_cells[n, 0].CurrentValue != _cells[n, i].CurrentValue)
-                    isMatching = false;
+                if (Cells[n, 0].CurrentValue != Cells[n, i].CurrentValue)
+                    return false;
 
-            return isMatching;
+            return true;
+        }
+
+        private void CheckColumnForWinner()
+        {
+            for (var n = 0; n < Side; n++)
+                if (IsColumnMatchingCells(n)
+                    && IsCellClaimed(0, n))
+                    Winner = Cells[0, n].CurrentValue;
         }
 
         private bool IsColumnMatchingCells(int n)
         {
-            var isMatching = true;
-
             for (int i = 1; i < Side; i++)
-                if (_cells[0, n].CurrentValue != _cells[i, n].CurrentValue)
-                    isMatching = false;
+                if (Cells[0, n].CurrentValue != Cells[i, n].CurrentValue)
+                    return false;
 
-            return isMatching;
+            return true;
+        }
+
+        private void CheckDiagonalsForWinner()
+        {
+            if (IsDiagonalMatching()
+                && IsCellClaimed(0, 0))
+                Winner = Cells[0, 0].CurrentValue;
+            else if (IsReverseDiagonalMatching()
+                     && IsCellClaimed(0, Side - 1))
+                Winner = Cells[0, Side - 1].CurrentValue;
         }
 
         private bool IsDiagonalMatching()
         {
-            var isMatching = true;
-
             for (int n = 1; n < Side; n++)
-                if (_cells[0, 0].CurrentValue != _cells[n, n].CurrentValue)
-                    isMatching = false;
+                if (Cells[0, 0].CurrentValue != Cells[n, n].CurrentValue)
+                    return false;
 
-            return isMatching;
+            return true;
         }
 
         private bool IsReverseDiagonalMatching()
         {
-            var isMatching = true;
-
             for (int n = 1; n < Side; n++)
-                if (_cells[0, Side - 1].CurrentValue != _cells[n, Side - 1 - n].CurrentValue)
-                    isMatching = false;
+                if (Cells[0, Side - 1].CurrentValue != Cells[n, Side - 1 - n].CurrentValue)
+                    return false;
 
-            return isMatching;
+            return true;
         }
 
         private bool IsCellClaimed(int row, int column)
         {
-            return _cells[row, column].CurrentValue != Piece.N;
+            return Cells[row, column].CurrentValue != Piece.E;
         }
     }
 }
