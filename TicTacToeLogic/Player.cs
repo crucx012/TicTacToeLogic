@@ -8,7 +8,7 @@ namespace TicTacToeLogic
         public Piece Piece { get; set; }
         public bool IsCpu { get; set; }
 
-        public void Turn(Cell c)
+        public void SetPiece(Cell c)
         {
             c.SetCellToPlayerPiece(Piece);
         }

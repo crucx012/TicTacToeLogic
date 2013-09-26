@@ -7,20 +7,20 @@
         private Cell ClaimedCell { get; set; }
         public Piece Winner { get; set; }
         private int Turn { get; set; }
+        readonly int[] _score = new[] { 0, 0, 0 };
         readonly Player _player1 = new Player();
         readonly Player _player2 = new Player();
-        readonly int[] _score = new[] { 0, 0, 0 };
         readonly Grid _grid;
         readonly Cell[,] _cells;
 
-        public Game(int side, Piece firstPlayer, int humanPlayers)
+        public Game(int sideSize, Piece firstPlayer, int numberOfNonCpus)
         {
-            _cells = new Cell[side, side];
-            _grid = new Grid(_cells) { Side = side };
+            _cells = new Cell[sideSize, sideSize];
+            _grid = new Grid(_cells) { Side = sideSize };
 
-            SetCollectionToValue(side);
+            SetCollectionToValue(sideSize);
             SetPlayerPieces(firstPlayer);
-            SetPlayerCpuFlags(humanPlayers);
+            SetPlayerCpuFlags(numberOfNonCpus);
         }
 
         private void SetPlayerPieces(Piece firstPlayer)
@@ -95,9 +95,9 @@
         private void ClaimCell()
         {
             if (IsFirstPlayersTurn())
-                _player1.Turn(ClaimedCell);
+                _player1.SetPiece(ClaimedCell);
             else
-                _player2.Turn(ClaimedCell);
+                _player2.SetPiece(ClaimedCell);
         }
 
         public Piece GetWinner()
