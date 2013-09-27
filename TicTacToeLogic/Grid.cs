@@ -4,7 +4,7 @@ namespace TicTacToeLogic
 {
     public class Grid
     {
-        public int Side { get; set; }
+        public int SideLength { get; set; }
         public Piece Winner { get; set; }
         public Cell[,] Cells { get; set; }
 
@@ -15,22 +15,11 @@ namespace TicTacToeLogic
 
         public Grid Clone()
         {
-            var newGrid = new Grid(Cells)
-            {
-                Winner = Winner,
-                Side = Side,
-                Cells = new Cell[Side, Side]
-            };
+            var newGrid = new Grid(Cells){Winner = Winner,SideLength = SideLength,Cells = new Cell[SideLength, SideLength]};
 
-            for (var i = 0; i < Side; i++)
-                for (var j = 0; j < Side; j++)
-                    newGrid.Cells[i, j] = new Cell
-                    {
-                        CurrentValue = Cells[i, j].CurrentValue,
-                        Rank = Cells[i, j].Rank,
-                        X = i,
-                        Y = j
-                    };
+            for (var i = 0; i < SideLength; i++)
+                for (var j = 0; j < SideLength; j++)
+                    newGrid.Cells[i, j] = new Cell{CurrentValue = Cells[i, j].CurrentValue,Rank = Cells[i, j].Rank,X = i,Y = j};
 
             return newGrid;
         }
@@ -58,7 +47,7 @@ namespace TicTacToeLogic
 
         private void CheckRowForWinner()
         {
-            for (var n = 0; n < Side; n++)
+            for (var n = 0; n < SideLength; n++)
                 if (IsRowMatchingCells(n)
                     && IsCellClaimed(n, 0))
                     Winner = Cells[n, 0].CurrentValue;
@@ -66,7 +55,7 @@ namespace TicTacToeLogic
 
         private bool IsRowMatchingCells(int n)
         {
-            for (int i = 1; i < Side; i++)
+            for (int i = 1; i < SideLength; i++)
                 if (Cells[n, 0].CurrentValue != Cells[n, i].CurrentValue)
                     return false;
 
@@ -75,7 +64,7 @@ namespace TicTacToeLogic
 
         private void CheckColumnForWinner()
         {
-            for (var n = 0; n < Side; n++)
+            for (var n = 0; n < SideLength; n++)
                 if (IsColumnMatchingCells(n)
                     && IsCellClaimed(0, n))
                     Winner = Cells[0, n].CurrentValue;
@@ -83,7 +72,7 @@ namespace TicTacToeLogic
 
         private bool IsColumnMatchingCells(int n)
         {
-            for (int i = 1; i < Side; i++)
+            for (int i = 1; i < SideLength; i++)
                 if (Cells[0, n].CurrentValue != Cells[i, n].CurrentValue)
                     return false;
 
@@ -96,13 +85,13 @@ namespace TicTacToeLogic
                 && IsCellClaimed(0, 0))
                 Winner = Cells[0, 0].CurrentValue;
             else if (IsReverseDiagonalMatching()
-                     && IsCellClaimed(0, Side - 1))
-                Winner = Cells[0, Side - 1].CurrentValue;
+                     && IsCellClaimed(0, SideLength - 1))
+                Winner = Cells[0, SideLength - 1].CurrentValue;
         }
 
         private bool IsDiagonalMatching()
         {
-            for (int n = 1; n < Side; n++)
+            for (int n = 1; n < SideLength; n++)
                 if (Cells[0, 0].CurrentValue != Cells[n, n].CurrentValue)
                     return false;
 
@@ -111,8 +100,8 @@ namespace TicTacToeLogic
 
         private bool IsReverseDiagonalMatching()
         {
-            for (int n = 1; n < Side; n++)
-                if (Cells[0, Side - 1].CurrentValue != Cells[n, Side - 1 - n].CurrentValue)
+            for (int n = 1; n < SideLength; n++)
+                if (Cells[0, SideLength - 1].CurrentValue != Cells[n, SideLength - 1 - n].CurrentValue)
                     return false;
 
             return true;

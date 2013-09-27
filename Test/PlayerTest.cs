@@ -39,7 +39,7 @@ namespace Test
                 for (var j = 0; j < 3; j++)
                     cells[i, j] = new Cell { X = i, Y = j };
 
-            var g = new Grid(cells) {Side = 3};
+            var g = new Grid(cells) {SideLength = 3};
             g.Cells[0, 0].CurrentValue = Piece.X;
             var claimedCell = _p.AI(g, _p.Piece);
             _p.SetPiece(g.Cells[claimedCell.X, claimedCell.Y]);

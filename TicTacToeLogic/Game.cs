@@ -11,14 +11,14 @@
         readonly Player _player1 = new Player();
         readonly Player _player2 = new Player();
         readonly Grid _grid;
-        readonly Cell[,] _cells;
+        public readonly Cell[,] Cells;
 
-        public Game(int sideSize, Piece firstPlayer, int numberOfNonCpus)
+        public Game(int sideLength, Piece firstPlayer, int numberOfNonCpus)
         {
-            _cells = new Cell[sideSize, sideSize];
-            _grid = new Grid(_cells) { Side = sideSize };
+            Cells = new Cell[sideLength, sideLength];
+            _grid = new Grid(Cells) { SideLength = sideLength };
 
-            SetCollectionToValue(sideSize);
+            SetCollectionToValue(sideLength);
             SetPlayerPieces(firstPlayer);
             SetPlayerCpuFlags(numberOfNonCpus);
         }
@@ -33,7 +33,7 @@
         {
             for (var i = 0; i < side; i++)
                 for (var j = 0; j < side; j++)
-                    _cells[i, j] = new Cell { CurrentValue = Piece.E, X = i, Y = j };
+                    Cells[i, j] = new Cell { CurrentValue = Piece.E, X = i, Y = j };
         }
 
         private void SetPlayerCpuFlags(int players)
@@ -79,12 +79,12 @@
         {
             var row = 0;
 
-            for (; index > _grid.Side; index -= _grid.Side)
+            for (; index > _grid.SideLength; index -= _grid.SideLength)
                 row++;
 
             var column = index - 1;
 
-            ClaimedCell = _cells[row, column];
+            ClaimedCell = Cells[row, column];
         }
 
         private bool IsCellClaimed()
@@ -109,7 +109,7 @@
 
         public int GetScore(Piece playerPiece)
         {
-            return _score[(int)_player1.Piece];
+            return _score[(int)playerPiece];
         }
 
         public Piece GetCellValue(int i)
@@ -125,6 +125,15 @@
                 ConvertIndexToCell(i);
                 ClaimCell();
                 Turn++;
+            }
+        }
+
+        public void NewGame()
+        {
+            foreach (Cell c in Cells)
+            {
+                c.CurrentValue = Piece.E;
+                c.Rank = 0;
             }
         }
     }

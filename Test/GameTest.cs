@@ -8,9 +8,9 @@ namespace Test
     {
         private Game _g;
 
-        private void SetupGame(int sideSize, int numberOfNonCpus)
+        private void SetupGame(int sideLength, int numberOfNonCpus)
         {
-            _g = new Game(sideSize, Piece.X, numberOfNonCpus);
+            _g = new Game(sideLength, Piece.X, numberOfNonCpus);
         }
 
         private void TakeManyTurns(params int[] indexs)
@@ -166,6 +166,20 @@ namespace Test
             Assert.AreEqual(Piece.O, _g.GetCellValue(9));
             _g.TakeTurn(4);
             Assert.AreEqual(Piece.E, _g.GetWinner());
+        }
+
+        [TestMethod]
+        public void TestStartNewGame()
+        {
+            SetupGame(3, 2);
+            TakeManyTurns(1,2,3,7,8,9,4,5,6);
+            Assert.AreEqual(Piece.E, _g.GetWinner());
+            _g.NewGame();
+
+            foreach (Cell c in _g.Cells)
+                Assert.AreEqual(Piece.E, c.CurrentValue);
+
+            Assert.AreEqual(1, _g.GetScore(Piece.E));
         }
     }
 }
