@@ -2,7 +2,7 @@
 
 namespace TicTacToeLogic
 {
-    internal class Grid
+    public class Grid
     {
         public int Side { get; set; }
         public Piece Winner { get; set; }

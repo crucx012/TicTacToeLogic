@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace TicTacToeLogic
 {
-    class Player
+    public class Player
     {
         public Piece Piece { get; set; }
         public bool IsCpu { get; set; }

@@ -150,20 +150,20 @@ namespace Test
         [TestMethod]
         public void TestCpuAIResponses()
         {
-            _g = new Game(3, Piece.O, 1);
+            SetupGame(3, 1);
             _g.TakeTurn(1);
-            _g.TakeTurn(1);
-            Assert.AreEqual(Piece.X, _g.GetCellValue(5));
-            _g.TakeTurn(1); //already claimed cell
+            _g.TakeTurn(0);
+            Assert.AreEqual(Piece.O, _g.GetCellValue(5));
+            _g.TakeTurn(1);//already claimed cell
             _g.TakeTurn(6);
-            _g.TakeTurn(1);
-            Assert.AreEqual(Piece.X, _g.GetCellValue(2));
+            _g.TakeTurn(0);
+            Assert.AreEqual(Piece.O, _g.GetCellValue(2));
             _g.TakeTurn(8);
-            _g.TakeTurn(1);
-            Assert.AreEqual(Piece.X, _g.GetCellValue(7));
+            _g.TakeTurn(0);
+            Assert.AreEqual(Piece.O, _g.GetCellValue(7));
             _g.TakeTurn(3);
-            _g.TakeTurn(1);
-            Assert.AreEqual(Piece.X, _g.GetCellValue(9));
+            _g.TakeTurn(0);
+            Assert.AreEqual(Piece.O, _g.GetCellValue(9));
             _g.TakeTurn(4);
             Assert.AreEqual(Piece.E, _g.GetWinner());
         }
