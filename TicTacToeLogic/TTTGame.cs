@@ -4,7 +4,7 @@ namespace TicTacToeLogic
 {
     public enum Piece { E = 0, O = 1, X = 2 }
 
-    public class Game
+    public class TTTGame
     {
         private Cell ClaimedCell { get; set; }
         private int Turn { get; set; }
@@ -12,9 +12,9 @@ namespace TicTacToeLogic
         public Player Player2 = new Player();
         public readonly Grid Grid;
         public readonly Cell[,] Cells;
-        public readonly int[] Score = new[] { 0, 0, 0 };
+        public readonly int[] Score = { 0, 0, 0 };
 
-        public Game(int sideLength, Piece firstPlayer, int numberOfNonCpus)
+        public TTTGame(int sideLength, Piece firstPlayer, int numberOfNonCpus)
         {
             Cells = new Cell[sideLength, sideLength];
             Grid = new Grid(Cells) { SideLength = sideLength };

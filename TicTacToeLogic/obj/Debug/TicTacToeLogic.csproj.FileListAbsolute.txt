@@ -3,3 +3,8 @@ C:\Users\wblack\Documents\Visual Studio 2012\Projects\TicTacToeLogic\TicTacToeLo
 C:\Users\wblack\Documents\Visual Studio 2012\Projects\TicTacToeLogic\TicTacToeLogic\obj\Debug\TicTacToeLogic.csprojResolveAssemblyReference.cache
 C:\Users\wblack\Documents\Visual Studio 2012\Projects\TicTacToeLogic\TicTacToeLogic\obj\Debug\TicTacToeLogic.dll
 C:\Users\wblack\Documents\Visual Studio 2012\Projects\TicTacToeLogic\TicTacToeLogic\obj\Debug\TicTacToeLogic.pdb
+C:\Projects\Training\Final Kata\TicTacToeLogic\TicTacToeLogic\bin\Debug\TicTacToeLogic.dll
+C:\Projects\Training\Final Kata\TicTacToeLogic\TicTacToeLogic\bin\Debug\TicTacToeLogic.pdb
+C:\Projects\Training\Final Kata\TicTacToeLogic\TicTacToeLogic\obj\Debug\TicTacToeLogic.csprojResolveAssemblyReference.cache
+C:\Projects\Training\Final Kata\TicTacToeLogic\TicTacToeLogic\obj\Debug\TicTacToeLogic.dll
+C:\Projects\Training\Final Kata\TicTacToeLogic\TicTacToeLogic\obj\Debug\TicTacToeLogic.pdb

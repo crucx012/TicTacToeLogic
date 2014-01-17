@@ -6,11 +6,11 @@ namespace Test
     [TestClass]
     public class GameTest
     {
-        private Game _g;
+        private TTTGame _g;
 
         private void SetupGame(int sideLength, int numberOfNonCpus)
         {
-            _g = new Game(sideLength, Piece.X, numberOfNonCpus);
+            _g = new TTTGame(sideLength, Piece.X, numberOfNonCpus);
         }
 
         private void TakeManyTurns(params int[] indexs)
