@@ -120,7 +120,7 @@ namespace Test
         public void TestCpuAIClaim6_GameIsDraw()
         {
             SetupGame(3, 0);
-            _g.ManuallyPopulateCells(1, 2, 3, 7, 8, 9, 4, 5);
+            _g.ManuallyPopulateCells(false,1, 2, 3, 7, 8, 9, 4, 5);
             _g.TakeTurn(1);
             Assert.AreEqual(Piece.X, _g.GetCellValue(6));
             Assert.AreEqual(Piece.E, _g.GetWinner());
@@ -130,7 +130,7 @@ namespace Test
         public void TestCpuAIClaim5_GameIsWin()
         {
             SetupGame(3, 1);
-            _g.ManuallyPopulateCells(1, 2, 3, 8, 7, 4, 9);
+            _g.ManuallyPopulateCells(false,1, 2, 3, 8, 7, 4, 9);
             Assert.AreEqual(Piece.X, _g.GetCellValue(1));
             _g.TakeTurn(1);
             Assert.AreEqual(Piece.O, _g.GetCellValue(5));
@@ -141,7 +141,7 @@ namespace Test
         public void TestCpuAIClaim9_GameIsWin()
         {
              SetupGame(3, 1);
-            _g.ManuallyPopulateCells(1, 3, 5, 6, 4, 7, 2);
+             _g.ManuallyPopulateCells(false,1, 3, 5, 6, 4, 7, 2);
             _g.TakeTurn(1);
             Assert.AreEqual(Piece.O, _g.GetCellValue(9));
             Assert.AreEqual(Piece.O, _g.GetWinner());
