@@ -7,7 +7,7 @@ namespace TicTacToeLogic
     public class TTTGame
     {
         private Cell ClaimedCell { get; set; }
-        private int Turn { get; set; }
+        public int Turn { get; set; }
         public Player Player1 = new Player();
         public Player Player2 = new Player();
         public readonly Grid Grid;
@@ -76,15 +76,44 @@ namespace TicTacToeLogic
                    && Player2.IsCpu;
         }
 
-        private bool IsFirstPlayersTurn()
-        {
-            return Turn % 2 == 0;
-        }
-
         private void CpuChooseCell()
         {
             Cell chosenCell = IsFirstPlayersTurn() ? Player1.AI(Grid, Player1.Piece) : Player2.AI(Grid, Player2.Piece);
             ClaimedCell = Grid.Cells[chosenCell.X, chosenCell.Y];
+        }
+
+        private bool IsCellClaimed()
+        {
+            return ClaimedCell.CurrentValue != Piece.E;
+        }
+
+        public void ManuallyPopulateCells(params int[] indexs)
+        {
+            foreach (int i in indexs)
+            {
+                ConvertIndexToCell(i);
+                ClaimCell();
+                Turn++;
+            }
+        }
+
+        private void ClaimCell()
+        {
+            if (IsFirstPlayersTurn())
+                Player1.SetPiece(ClaimedCell);
+            else
+                Player2.SetPiece(ClaimedCell);
+        }
+
+        public Piece GetCellValue(int i)
+        {
+            ConvertIndexToCell(i);
+            return ClaimedCell.CurrentValue;
+        }
+
+        private bool IsFirstPlayersTurn()
+        {
+            return Turn % 2 == 0;
         }
 
         private void ConvertIndexToCell(int index)
@@ -99,29 +128,12 @@ namespace TicTacToeLogic
             ClaimedCell = Cells[row, column];
         }
 
-        private bool IsCellClaimed()
-        {
-            return ClaimedCell.CurrentValue != Piece.E;
-        }
-
-        private void ClaimCell()
-        {
-            if (IsFirstPlayersTurn())
-                Player1.SetPiece(ClaimedCell);
-            else
-                Player2.SetPiece(ClaimedCell);
-        }
-
         public Piece? GetWinner()
         {
             var winner = Grid.GetWinner();
-            if (winner != Piece.E || IsGridFull())
-            {
-                Score[(int) winner] += 1;
-                return winner;
-            }
-
-            return null;
+            if (winner == Piece.E && !IsGridFull()) return null;
+            Score[(int)winner] += 1;
+            return winner;
         }
 
         private bool IsGridFull()
@@ -132,22 +144,6 @@ namespace TicTacToeLogic
         public int GetScore(Piece playerPiece)
         {
             return Score[(int)playerPiece];
-        }
-
-        public Piece GetCellValue(int i)
-        {
-            ConvertIndexToCell(i);
-            return ClaimedCell.CurrentValue;
-        }
-
-        public void ManuallyPopulateCells(params int[] index)
-        {
-            foreach (int i in index)
-            {
-                ConvertIndexToCell(i);
-                ClaimCell();
-                Turn++;
-            }
         }
 
         public void NewGame()
